@@ -1,4 +1,5 @@
 __pycache__/
 pytorch_venv/
+outputs/
 *.p
 *.png

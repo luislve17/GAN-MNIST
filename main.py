@@ -2,7 +2,9 @@ from DataLoader import MNIST_dataset
 from Modules import Generator, Discriminator
 from TrainingUtils import train_discriminator, train_generator
 
+import os
 import sys
+import datetime
 from time import time
 import pickle
 import torch
@@ -67,7 +69,11 @@ for epoch in range(EPOCHS):
 
 	print("Epoch time:{}".format(time() - epoch_start))
 
-torch.save( generator.state_dict(), "generator_model.torch")
-torch.save( discriminator.state_dict(), "discriminator_model.torch")
-pickle.dump( data_series, open( "data.p", "wb" ) )
-pickle.dump( error_history, open( "errors.p", "wb" ) )
+out_folder = "outputs/" + datetime.datetime.now().strftime("%y-%m-%d_%H_%M_%S") + "/"
+if not os.path.exists(out_folder):
+	os.makedirs(out_folder)
+
+torch.save( generator.state_dict(), out_folder + "generator_model.torch")
+torch.save( discriminator.state_dict(), out_folder + "discriminator_model.torch")
+pickle.dump( data_series, open( out_folder + "data.p", "wb" ) )
+pickle.dump( error_history, open( out_folder + "errors.p", "wb" ) )
