@@ -13,9 +13,10 @@ class MNIST_dataset(Dataset):
 
 		self.x = raw_mnist_train_maps
 		self.y = raw_mnist_train_labels
-
-		#self.x = self.x[:100]
-		#self.y = self.y[:100]
+		
+		n = 5000
+		self.x = self.x[:n]
+		self.y = self.y[:n]
 
 		self.total = self.x.shape[0]
 

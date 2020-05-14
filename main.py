@@ -49,13 +49,13 @@ for epoch in range(EPOCHS):
 		fake_data = generator(Variable(torch.randn(BATCH_SIZE, NOISE_DIM)))
 		generator_error = train_generator(discriminator, generator_optimizer, fake_data)
 
-	if i % 100 == 0:
-		test_images = generator(generated_noises).view(16, 1, 28, 28)
-		test_images = test_images.data.numpy()
-		data_series.append(test_images)
+		if i % 100 == 0:
+			test_images = generator(generated_noises).view(16, 1, 28, 28)
+			test_images = test_images.data.numpy()
+			data_series.append(test_images)
 
-		error_history['discriminator'].append(discriminator_error)
-		error_history['generator'].append(generator_error)
+			error_history['discriminator'].append(discriminator_error)
+			error_history['generator'].append(generator_error)
 
 	print("Epoch time:{}".format(time() - epoch_start))
 
