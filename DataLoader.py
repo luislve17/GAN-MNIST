@@ -7,16 +7,16 @@ import torchvision.transforms as transforms
 from torch.utils.data import Dataset
 
 class MNIST_dataset(Dataset):
-	def __init__(self, data_group='train', transform=None):
+	def __init__(self, n=None, data_group='train', transform=None):
 		raw_mnist_train_maps = idx2numpy.convert_from_file('./MNIST_data/train-images-idx3-ubyte')
 		raw_mnist_train_labels = idx2numpy.convert_from_file('./MNIST_data/train-labels-idx1-ubyte')
 
 		self.x = raw_mnist_train_maps
 		self.y = raw_mnist_train_labels
 		
-		n = 5000
-		self.x = self.x[:n]
-		self.y = self.y[:n]
+		if n:
+			self.x = self.x[:n]
+			self.y = self.y[:n]
 
 		self.total = self.x.shape[0]
 

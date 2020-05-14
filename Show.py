@@ -42,10 +42,3 @@ n = N
 for i in range(n):
     animate(i, n)
     plt.savefig('imgs/frame_{}.png'.format(str(i).zfill(5)))
-
-#im = init()
-#
-#print("Total:{} | Using:{}".format(N,n))
-#fps = 10
-#anim = animation.FuncAnimation(fig, animate, frames=n, interval=1000/fps)
-#anim.save('test.gif', fps=fps, writer="imagemagick")

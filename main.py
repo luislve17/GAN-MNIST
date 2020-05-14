@@ -1,7 +1,6 @@
 from DataLoader import MNIST_dataset
 from Modules import Generator, Discriminator
 from TrainingUtils import train_discriminator, train_generator
-from Show import show_batch
 
 import sys
 from time import time
@@ -13,13 +12,22 @@ from torch.autograd.variable import Variable
 import matplotlib.pyplot as plt
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-BATCH_SIZE = 1
 INPUT_WIDTH = 28
 INPUT_HEIGHT = 28
 NOISE_DIM = 100
-EPOCHS = 200
 
-mnist_data = MNIST_dataset()
+try: BATCH_SIZE = int(input("Batch size:"))
+except: BATCH_SIZE = 1
+
+try: EPOCHS = int(input("Epochs:"))
+except: EPOCHS = 120
+
+try: TOTAL_IMGS = int(input("Total imgs:"))
+except: TOTAL_IMGS = None
+
+print(BATCH_SIZE, EPOCHS, TOTAL_IMGS)
+
+mnist_data = MNIST_dataset(n=TOTAL_IMGS)
 TOTAL_IMGS = mnist_data.total
 mnist = DataLoader(mnist_data, batch_size=BATCH_SIZE)
 
@@ -49,7 +57,7 @@ for epoch in range(EPOCHS):
 		fake_data = generator(Variable(torch.randn(BATCH_SIZE, NOISE_DIM)))
 		generator_error = train_generator(discriminator, generator_optimizer, fake_data)
 
-		if i % 100 == 0:
+		if i % 2500 == 0:
 			test_images = generator(generated_noises).view(16, 1, 28, 28)
 			test_images = test_images.data.numpy()
 			data_series.append(test_images)
@@ -59,5 +67,7 @@ for epoch in range(EPOCHS):
 
 	print("Epoch time:{}".format(time() - epoch_start))
 
+torch.save( generator.state_dict(), "generator_model.torch")
+torch.save( discriminator.state_dict(), "discriminator_model.torch")
 pickle.dump( data_series, open( "data.p", "wb" ) )
 pickle.dump( error_history, open( "errors.p", "wb" ) )
