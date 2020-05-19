@@ -15,31 +15,31 @@ tensor_batch = np.array(tensor_batch)
 max_val = np.array(tensor_batch).max()
 min_val = np.array(tensor_batch).min()
 
-def init():
-    batch = tensor_batch[0]
-    for ax, data in zip(axs.flat, batch):
-        ax.axis('off')
-        ax.imshow(data[0], vmin=min_val, vmax=max_val)
-    fig.subplots_adjust(wspace=0.05, hspace=0.05)
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0)
-    return [fig]
+def export(total):
+    image = [None]*16
 
-def animate(i, total):
-    start = time()
-    batch = tensor_batch[i]
+    for i in range(total):
+        start = time()
+        batch = tensor_batch[i]
 
-    for ax, data in zip(axs.flat, batch):
-        ax.axis('off')
-        ax.imshow(data[0], vmin=min_val, vmax=max_val)
-    fig.subplots_adjust(wspace=0.05, hspace=0.05)
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0)
-    print("Exporting:{}/{}\tT:{} ms/img".format(i,n, round((time() - start)*1000, 3) ) )
-    sys.stdout.write("\033[F")
-    return [fig]
+        for index, ax, data in zip(range(n), axs.flat, batch):
+            ax.axis('off')
+
+            if image[index] is None:
+                image[index] = ax.imshow(data[0], vmin=min_val, vmax=max_val)
+            else:
+                image[index].set_data(data[0])
+
+
+        fig.subplots_adjust(wspace=0.05, hspace=0.05)
+        fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0)
+        print("Exporting:{}/{}\tT:{} ms/img".format(i,n, round((time() - start)*1000, 3) ) )
+        sys.stdout.write("\033[F")
+
+        plt.savefig(folder_path + 'imgs/frame_{}.png'.format(str(i).zfill(5)))
 
 N = len(tensor_batch)
 n = N
 
-for i in range(680, n):
-    animate(i, n)
-    plt.savefig(folder_path + 'imgs/frame_{}.png'.format(str(i).zfill(5)))
+export(n)
+
