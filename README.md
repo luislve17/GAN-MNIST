@@ -59,8 +59,10 @@ will ask for the path of the folder where the `data.p` is located. During execut
 
 ### Examples
 
+#### Trained using 15k images
+
 ![15k data training process](https://github.com/luislve17/GAN-MNIST/blob/master/imgs/animation_15k.gif?raw=true)
 
-
+#### Trained using 30k images
 
 ![30k data training process](https://github.com/luislve17/GAN-MNIST/blob/master/imgs/animation_30k.gif)
