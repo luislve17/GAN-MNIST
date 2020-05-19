@@ -8,7 +8,8 @@ from time import time
 
 n = 16
 fig, axs = plt.subplots(2, n//2, figsize=(10,3))
-tensor_batch = pickle.load(open("data.p", "rb"))
+folder_path = input("Path:")
+tensor_batch = pickle.load(open(folder_path + "data.p", "rb"))
 ims = []
 tensor_batch = np.array(tensor_batch)
 max_val = np.array(tensor_batch).max()
@@ -39,6 +40,6 @@ def animate(i, total):
 N = len(tensor_batch)
 n = N
 
-for i in range(n):
+for i in range(680, n):
     animate(i, n)
-    plt.savefig('imgs/frame_{}.png'.format(str(i).zfill(5)))
+    plt.savefig(folder_path + 'imgs/frame_{}.png'.format(str(i).zfill(5)))
