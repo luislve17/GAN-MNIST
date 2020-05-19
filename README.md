@@ -57,8 +57,6 @@ python Show.py
 
 will ask for the path of the folder where the `data.p` is located. During execution, `.png` will be exported to an inner folder `imgs/` where each frame can be later used in an animation. (Using external tool as `convert`)
 
-
-
 ### Examples
 
 ![15k data training process](https://github.com/luislve17/GAN-MNIST/blob/master/imgs/animation_15k.gif?raw=true)
