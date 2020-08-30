@@ -3,3 +3,4 @@ pytorch_venv/
 outputs/
 *.p
 *.png
+*.mp4
